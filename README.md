@@ -30,10 +30,12 @@ Onde _pathname_ representa o caminho do arquivo a ser criado, e _mode_ represent
 ## Implementação
 Como descrito em [Pipes](https://github.com/NakedSolidSnake/Raspberry_IPC_Pipe) será apresentando uma implementação de uma aplicação cliente-servidor.
 ## launch_processes.c
+Declaramos variáveis para armazenar o PID dos processos _button_process_ e _led_process_, e variáveis para armazenar o estado da chamada feita pelo _exec_
 ```c
 int pid_button, pid_led;
 int button_status, led_status;
 ```
+Aqui clonamos o processo usando _fork_ e chamamos o _exec_ com o _button_process_ como parâmetro para que o clone mude o seu contexto para _button_process_
 ```c
 pid_button = fork();
 
@@ -47,6 +49,7 @@ if(pid_button == 0)
 }   
     
 ```
+Aqui clonamos o processo usando _fork_ e chamamos o _exec_ com o _led_process_ como parâmetro para que o clone mude o seu contexto para _led_process_
 ```c
 pid_led = fork();
 
@@ -60,6 +63,7 @@ if(pid_led == 0)
 }
 ```
 ## button_process.c
+Configuramos o descritor do botão como entrada, com _pullup_ habilitado 
 ```c
 static Button_t button = {
     .gpio.pin = 7,
@@ -69,12 +73,13 @@ static Button_t button = {
     .cb = NULL
 };
 ```
-
+Aqui criamos variáveis para receber o _handle_ do arquivo, um buffer para escrevermos o estado do botão, que servirá como base para a alteração do estado do LED, e uma para manter
 ```c
 int fd; 
 char buffer[2] = {0};
 int state = 0;
 ```
+Definimos o caminho onde o arquivo será criado, e por fim criamos o arquivo _FIFO_ com permissão de escrita e leitura para o usuário, grupo e outros
 ```c
 char * myfifo = "/tmp/myfifo"; 
 mkfifo(myfifo, 0666);
@@ -83,6 +88,7 @@ mkfifo(myfifo, 0666);
 if(Button_init(&button))
     return EXIT_FAILURE;
 ```
+Nesse loop é aguardado o pressionamento do botão para que a alteração do estado seja efetivado e o loop interrompido
 ```c
 while(1)
 {
@@ -97,6 +103,7 @@ while(1)
     }
 }   
 ```
+Nesse trecho, abrimos o arquivo da FIFO e adquirimos o handle do arquivo, formatamos o buffer com o valor presente na variável _state_ e escrevemos na FIFO, e fechamos o handle
 ```c
 fd = open(myfifo, O_WRONLY);
 snprintf(buffer, sizeof(buffer), "%d", state);
@@ -104,6 +111,7 @@ write(fd, buffer, strlen(buffer)+1);
 close(fd);         	
 ```
 ## led_process.c
+Aqui criamos variáveis para receber o handle da FIFO, um buffer que será usado para ler o valor contido na FIFO, uma variável para guardar o estado, uma string com o caminho da FIFO e por fim o descritor de LED
 ```c
 int fd;
 int state;
@@ -117,13 +125,16 @@ LED_t led =
     .gpio.eMode = eModeOutput
 };
 ```
+Inicializamos o LED com o descritor previamente configurado
 ```c
 if (LED_init(&led))
     return EXIT_FAILURE;
 ```
+Garantimos que a FIFO foi criada
 ```c	
 mkfifo(myfifo, 0666); 
 ```
+Aqui a aplicação fica realizando _pooling_ lendo o conteúdo do arquivo e aplicando em LED
 ```c
 while (1) 
 { 
@@ -131,9 +142,9 @@ while (1)
   fd = open(myfifo,O_RDONLY); 
   read(fd, buffer, 2);
   close(fd); 
-      state = atoi(buffer); 		
+  state = atoi(buffer); 		
 
-      LED_set(&led, (eState_t)state);
+  LED_set(&led, (eState_t)state);
 } 
 ```
 ## Compilando
