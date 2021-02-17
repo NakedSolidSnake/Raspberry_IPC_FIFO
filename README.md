@@ -148,7 +148,31 @@ while (1)
 } 
 ```
 ## Compilando
+OBS: Para compilar e testar o projeto é necessário instalar a biblioteca de hardware necessária para resolver as dependências de configuração de GPIO da Raspberry Pi.
+Para compilar execute os comandos abaixo
+```bash
+$ git clone https://github.com/NakedSolidSnake/Raspberry_IPC_FIFO
+$ cd Raspberry_IPC_FIFO
+$ mkdir build && cd build
+$ cmake ..
+$ make
+```
 ## Executando
+Para executar a aplicação execute o processo launch_processes para lançar os processos button_process e led_process
+```bash
+$ cd bin
+$ ./launch_processes
+```
 ## Matando os processos
+Para matar os processos criados execute o script kill_process.sh
+```bash
+$ cd bin
+$ ./kill_process.sh
+```
 ## Conclusão
+_FIFO_ é um IPC um pouco mais versátil do que [Pipes](https://github.com/NakedSolidSnake/Raspberry_IPC_Pipe), permite que diversos processos se comuniquem entre si através desse recurso, porém pode se tornar um pouco mais complicado quando se necessita entregar as mensagens para um processo específico, necessitando a implementação de filtros por parte da aplicação que consome o conteúdo.
+
 ## Referências
+* [Linux Programming Interface](https://www.amazon.com.br/dp/B004OEJMZM/ref=dp-kindle-redirect?_encoding=UTF8&btkr=1)
+* [fork e exec](https://github.com/NakedSolidSnake/Raspberry_fork_exec)
+* [lib hardware](https://github.com/NakedSolidSnake/Raspberry_lib_hardware)
