@@ -4,10 +4,10 @@
 
 # FIFO
 ## Tópicos
-* (Introdução)[#Introdução]
-* (Implementação)[#Implementação]
-* (Conclusão)[#Conclusão]
-* (Referências)[#Referências]
+* [Introdução](#Introdução)
+* [Implementação](#Implementação)
+* [Conclusão](#Conclusão)
+* [Referências](#Referências)
 
 ## Introdução
 ## Implementação
