@@ -70,7 +70,7 @@ if(pid_led == 0)
 ```
 ## button_interface.c
 
-Aqui criamos variáveis para receber o _handle_ do arquivo, um buffer para escrevermos o estado do botão, que servirá como base para a alteração do estado do LED, e uma para manter
+Aqui criamos variáveis para receber o _handle_ do arquivo, um buffer para escrevermos o estado do botão, que servirá como base para a alteração do estado do LED, e uma para manter armazenar o estado atual do LED
 ```c
 int fd; 
 char buffer[2] = {0};
