@@ -16,7 +16,7 @@ bool Button_Run(void *object, Button_Interface *button)
     int state = 0;
 
 	// FIFO file path 
-	char * fifo = "/tmp/read_fifo"; 
+	char *fifo = "/tmp/fifo_ipc"; 
 
 	mkfifo(fifo, 0666);
 

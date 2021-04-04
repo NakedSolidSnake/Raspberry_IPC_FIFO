@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
         .Read = Read
     };
 
-    Button_Run(&button, argv, &button_interface);
+    Button_Run(&button, &button_interface);
         
     return 0;
 }

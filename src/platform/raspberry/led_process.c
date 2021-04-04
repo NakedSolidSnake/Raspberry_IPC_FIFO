@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
         .Set = Set
     };
 
-    LED_Run(&led, argv, &led_interface);
+    LED_Run(&led, &led_interface);
     
     return 0;
 }
