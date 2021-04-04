@@ -4,17 +4,23 @@
 
 # FIFO
 ## Tópicos
-* [Introdução](#Introdução) 
+* [Introdução](#introdução)
 * [Criando FIFO](#criando-fifo)
-* [Implementação](#Implementação)
+* [Implementação](#implementação)
 * [launch_processes.c](#launch_processesc)
-* [button_process.c](#button_processc)
-* [led_process.c](#led_processc)
+* [button_interface.c](#button_interfacec)
+* [led_interface.c](#led_interfacec)
+* [Compilando, Executando e Matando os processos](#compilando-executando-e-matando-os-processos)
 * [Compilando](#compilando)
+* [Clonando o projeto](#clonando-o-projeto)
+* [Selecionando o modo](#selecionando-o-modo)
 * [Executando](#executando)
+* [Interagindo com o exemplo](#interagindo-com-o-exemplo)
+* [MODO PC](#modo-pc-1)
+* [MODO RASPBERRY](#modo-raspberry-1)
 * [Matando os processos](#matando-os-processos)
-* [Conclusão](#Conclusão)
-* [Referências](#Referências)
+* [Conclusão](#conclusão)
+* [Referências](#referências)
 
 ## Introdução
 FIFO é um IPC similar à [PIPE](https://github.com/NakedSolidSnake/Raspberry_IPC_Pipe), mas diferente de PIPE possui um nome no filesystem, ou seja, é um arquivo como qualquer outro presente no filesystem, e pode ser manipulado com as funções de _open_, _read_, _write_ e _close_. Uma caracteristica desse IPC é que qualquer processo interessado nos dados que trafegam nesse IPC pode consumir esses dados.
