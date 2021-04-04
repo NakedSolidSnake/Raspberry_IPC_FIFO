@@ -19,7 +19,7 @@ bool LED_Run(void *object, LED_Interface *led)
 
 	mkfifo(fifo, 0666);
 
-    if (led->Init(object) == false)
+	if (led->Init(object) == false)
         return EXIT_FAILURE;
 	
 	while (true) 
