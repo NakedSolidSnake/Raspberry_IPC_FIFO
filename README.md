@@ -112,7 +112,7 @@ char *fifo = "/tmp/fifo_ipc";
 ```
 Inicializamos a interface LED com o descritor previamente configurado
 ```c
-if (led->Init(&object) == false)
+if (led->Init(object) == false)
     return EXIT_FAILURE;
 ```
 Garantimos que a FIFO foi criada
