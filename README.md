@@ -23,7 +23,7 @@
 * [Referências](#referências)
 
 ## Introdução
-FIFO é um IPC similar à [PIPE](https://github.com/NakedSolidSnake/Raspberry_IPC_Pipe), mas diferente de PIPE possui um nome no filesystem, ou seja, é um arquivo como qualquer outro presente no filesystem, e pode ser manipulado com as funções de _open_, _read_, _write_ e _close_. Uma caracteristica desse IPC é que qualquer processo interessado nos dados que trafegam nesse IPC pode consumir esses dados.
+FIFO é um IPC similar ao [PIPE](https://github.com/NakedSolidSnake/Raspberry_IPC_Pipe), mas diferente de PIPE possui um nome no filesystem, ou seja, é um arquivo como qualquer outro presente no filesystem, e pode ser manipulado com as funções de _open_, _read_, _write_ e _close_. Uma caracteristica desse IPC é que qualquer processo interessado nos dados que trafegam nesse IPC pode consumir esses dados.
 
 ## Criando FIFO
 Para criar uma FIFO usa-se a _system call_ 
