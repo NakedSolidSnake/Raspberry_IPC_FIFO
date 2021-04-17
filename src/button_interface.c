@@ -9,6 +9,22 @@
 
 #define _1ms    1000
 
+static void wait_press(void *object, Button_Interface *button)
+{
+    while (true)
+    {
+        if (!button->Read(object))
+        {
+            usleep(_1ms * 100);
+            break;
+        }
+        else
+        {
+            usleep(_1ms);
+        }
+    }
+}
+
 bool Button_Run(void *object, Button_Interface *button)
 {
     int fd; 
@@ -25,17 +41,9 @@ bool Button_Run(void *object, Button_Interface *button)
 
     while (true) 
 	{ 
-        while(true)
-        {
-            if(!button->Read(object)){
-                usleep(_1ms * 100);
-                state ^= 0x01;
-                break;
-            }else{
-                usleep( _1ms );
-            }
-        }   
+        wait_press(object, button);
 
+        state ^= 0x01;
 		fd = open(fifo, O_WRONLY);
         snprintf(buffer, sizeof(buffer), "%d", state);
 		write(fd, buffer, strlen(buffer)+1); 
