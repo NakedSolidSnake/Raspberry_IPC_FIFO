@@ -88,16 +88,9 @@ if(button->Init(object) == false)
 ```
 Nesse loop é aguardado o pressionamento do botão para que a alteração do estado seja efetivado e o loop interrompido
 ```c
-while(true)
-{
-    if(!button->Read(object)){
-        usleep(_1ms * 100);
-        state ^= 0x01;
-        break;
-    }else{
-        usleep( _1ms );
-    }
-}   
+wait_press(object, button);
+
+state ^= 0x01;  
 ```
 Nesse trecho, abrimos o arquivo da FIFO e adquirimos o handle do arquivo, formatamos o buffer com o valor presente na variável _state_ e escrevemos na FIFO, e fechamos o handle
 ```c
